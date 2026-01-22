@@ -239,19 +239,14 @@ h1 {
     margin-bottom: 25px;
 }
 
-/* Scene type badge - more prominent */
+/* Scene type text - prominent but simple */
 .scene-type-badge {
-    display: inline-block;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    font-size: 1.4em;
+    display: block;
+    text-align: center;
+    color: #667eea;
+    font-size: 1.5em;
     font-weight: 700;
-    padding: 12px 30px;
-    border-radius: 50px;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    margin-bottom: 10px;
 }
 
 /* Prompt text box */
