@@ -6,6 +6,9 @@
 // 配置：Google Sheets ID（创建表格后填入）
 const SPREADSHEET_ID = '12OPgQXM1NIQhqCceQwrn1J6ZIOeTgBSDEcyCb1JtfoY';
 
+// 方法列表（固定顺序，便于统计）
+const METHODS = ['holodeck', 'idesign', 'layoutgpt', 'layoutvlm', 'ours'];
+
 // 处理POST请求
 function doPost(e) {
   try {
@@ -29,15 +32,25 @@ function doGet(e) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
+// 将排名数组转换为各方法的排名数字
+// 输入: ['layoutgpt', 'layoutvlm', 'ours', 'idesign', 'holodeck'] (从好到差)
+// 输出: {holodeck: 5, idesign: 4, layoutgpt: 1, layoutvlm: 2, ours: 3}
+function rankingToScores(rankingArray) {
+  const scores = {};
+  rankingArray.forEach((method, index) => {
+    scores[method] = index + 1;  // 排名1=最好, 5=最差
+  });
+  return scores;
+}
+
 // 保存数据到Google Sheets
 function saveToSheet(data) {
   const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
   
-  // 获取或创建"原始数据"表
+  // ===== 表1: 原始数据（每个用户一行，保留原始排序字符串供参考） =====
   let rawSheet = ss.getSheetByName('原始数据');
   if (!rawSheet) {
     rawSheet = ss.insertSheet('原始数据');
-    // 添加表头
     rawSheet.appendRow([
       '会话ID', '提交时间', '用时(秒)', 
       '场景1-类型', '场景1-Prompt', '场景1-物理排序', '场景1-视觉排序',
@@ -48,40 +61,39 @@ function saveToSheet(data) {
     ]);
   }
   
-  // 构建数据行
-  const row = [
-    data.sessionId,
-    data.timestamp,
-    data.duration
-  ];
-  
-  // 添加每个场景的数据
+  const row = [data.sessionId, data.timestamp, data.duration];
   data.results.forEach(result => {
     row.push(result.sceneType);
     row.push(result.promptId);
     row.push(result.physicsRanking.join(' > '));
     row.push(result.visualRanking.join(' > '));
   });
-  
   rawSheet.appendRow(row);
   
-  // 同时保存详细数据用于统计
-  saveDetailedData(ss, data);
+  // ===== 表2: 统计用数据（每个场景一行，每个方法单独一列记录排名数字） =====
+  saveStatisticsData(ss, data);
 }
 
-// 保存详细数据便于统计分析
-function saveDetailedData(ss, data) {
-  let detailSheet = ss.getSheetByName('详细数据');
-  if (!detailSheet) {
-    detailSheet = ss.insertSheet('详细数据');
-    detailSheet.appendRow([
+// 保存便于统计的数据格式
+function saveStatisticsData(ss, data) {
+  let statsSheet = ss.getSheetByName('统计数据');
+  if (!statsSheet) {
+    statsSheet = ss.insertSheet('统计数据');
+    // 表头：每个方法两列（物理排名、视觉排名）
+    statsSheet.appendRow([
       '会话ID', '提交时间', '场景类型', 'Prompt ID',
-      '物理-排名1', '物理-排名2', '物理-排名3', '物理-排名4', '物理-排名5',
-      '视觉-排名1', '视觉-排名2', '视觉-排名3', '视觉-排名4', '视觉-排名5'
+      'holodeck_物理', 'holodeck_视觉',
+      'idesign_物理', 'idesign_视觉',
+      'layoutgpt_物理', 'layoutgpt_视觉',
+      'layoutvlm_物理', 'layoutvlm_视觉',
+      'ours_物理', 'ours_视觉'
     ]);
   }
   
   data.results.forEach(result => {
+    const physicsScores = rankingToScores(result.physicsRanking);
+    const visualScores = rankingToScores(result.visualRanking);
+    
     const row = [
       data.sessionId,
       data.timestamp,
@@ -89,87 +101,79 @@ function saveDetailedData(ss, data) {
       result.promptId
     ];
     
-    // 物理排序
-    result.physicsRanking.forEach(method => row.push(method));
+    // 按固定顺序添加每个方法的排名
+    METHODS.forEach(method => {
+      row.push(physicsScores[method] || '');
+      row.push(visualScores[method] || '');
+    });
     
-    // 视觉排序
-    result.visualRanking.forEach(method => row.push(method));
-    
-    detailSheet.appendRow(row);
+    statsSheet.appendRow(row);
   });
 }
 
 // 计算统计结果（可手动运行）
 function calculateStatistics() {
   const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-  const detailSheet = ss.getSheetByName('详细数据');
+  const statsSheet = ss.getSheetByName('统计数据');
   
-  if (!detailSheet) {
-    Logger.log('详细数据表不存在');
+  if (!statsSheet) {
+    Logger.log('统计数据表不存在');
     return;
   }
   
-  const data = detailSheet.getDataRange().getValues();
+  const data = statsSheet.getDataRange().getValues();
   if (data.length <= 1) {
     Logger.log('没有数据');
     return;
   }
   
-  const methods = ['holodeck', 'idesign', 'layoutgpt', 'layoutvlm', 'ours'];
+  // 初始化统计
   const physicsScores = {};
   const visualScores = {};
-  
-  methods.forEach(m => {
+  METHODS.forEach(m => {
     physicsScores[m] = [];
     visualScores[m] = [];
   });
   
-  // 跳过表头
+  // 跳过表头，统计数据
   for (let i = 1; i < data.length; i++) {
     const row = data[i];
-    
-    // 物理排序（列4-8）
-    for (let j = 4; j <= 8; j++) {
-      const method = row[j];
-      if (methods.includes(method)) {
-        physicsScores[method].push(j - 3);  // 排名1-5
-      }
-    }
-    
-    // 视觉排序（列9-13）
-    for (let j = 9; j <= 13; j++) {
-      const method = row[j];
-      if (methods.includes(method)) {
-        visualScores[method].push(j - 8);  // 排名1-5
-      }
-    }
+    // 列4-13: holodeck_物理, holodeck_视觉, idesign_物理, idesign_视觉, ...
+    METHODS.forEach((method, idx) => {
+      const physicsCol = 4 + idx * 2;
+      const visualCol = 5 + idx * 2;
+      if (row[physicsCol]) physicsScores[method].push(row[physicsCol]);
+      if (row[visualCol]) visualScores[method].push(row[visualCol]);
+    });
   }
   
-  // 创建或更新统计表
-  let statsSheet = ss.getSheetByName('统计结果');
-  if (statsSheet) {
-    ss.deleteSheet(statsSheet);
+  // 创建或更新结果表
+  let resultSheet = ss.getSheetByName('统计结果');
+  if (resultSheet) {
+    ss.deleteSheet(resultSheet);
   }
-  statsSheet = ss.insertSheet('统计结果');
+  resultSheet = ss.insertSheet('统计结果');
   
   // 表头
-  statsSheet.appendRow(['方法', '物理-平均排名', '物理-样本数', '视觉-平均排名', '视觉-样本数']);
+  resultSheet.appendRow(['方法', '物理-平均排名', '物理-样本数', '视觉-平均排名', '视觉-样本数', '综合-平均排名']);
   
   // 统计数据
-  methods.forEach(method => {
+  METHODS.forEach(method => {
     const physicsAvg = physicsScores[method].length > 0 
-      ? (physicsScores[method].reduce((a, b) => a + b, 0) / physicsScores[method].length).toFixed(3)
-      : 'N/A';
+      ? (physicsScores[method].reduce((a, b) => a + b, 0) / physicsScores[method].length)
+      : null;
     const visualAvg = visualScores[method].length > 0
-      ? (visualScores[method].reduce((a, b) => a + b, 0) / visualScores[method].length).toFixed(3)
-      : 'N/A';
+      ? (visualScores[method].reduce((a, b) => a + b, 0) / visualScores[method].length)
+      : null;
+    const overallAvg = (physicsAvg && visualAvg) ? ((physicsAvg + visualAvg) / 2) : null;
     
-    statsSheet.appendRow([
+    resultSheet.appendRow([
       method,
-      physicsAvg,
+      physicsAvg ? physicsAvg.toFixed(3) : 'N/A',
       physicsScores[method].length,
-      visualAvg,
-      visualScores[method].length
+      visualAvg ? visualAvg.toFixed(3) : 'N/A',
+      visualScores[method].length,
+      overallAvg ? overallAvg.toFixed(3) : 'N/A'
     ]);
   });
   
