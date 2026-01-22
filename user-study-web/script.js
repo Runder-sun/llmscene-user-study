@@ -136,16 +136,16 @@ function loadImages(prompt, result) {
     grid.innerHTML = '';
     
     // Display in fixed label order (A, B, C, D, E)
-    SCENE_CONFIG.methodLabels.forEach((label) => {
-        const method = result.labelToMethod[label];  // Get actual method for this label
+    SCENE_CONFIG.methodLabels.forEach((methodLabel) => {
+        const method = result.labelToMethod[methodLabel];  // Get actual method for this label
         
         const card = document.createElement('div');
         card.className = 'image-card';
         card.dataset.method = method;
-        card.dataset.label = label;
+        card.dataset.label = methodLabel;
         
         const imgPath = getImagePath(prompt.sceneType, prompt.promptId, method);
-        const displayName = label;  // Always show label (Method A, B, C, D, E)
+        const displayName = methodLabel;  // Always show label (Method A, B, C, D, E)
         
         // Create image element with better error handling
         const img = document.createElement('img');
@@ -182,12 +182,12 @@ function loadImages(prompt, result) {
         
         img.src = imgPath;
         
-        const label = document.createElement('div');
-        label.className = 'method-label';
-        label.textContent = displayName;
+        const labelDiv = document.createElement('div');
+        labelDiv.className = 'method-label';
+        labelDiv.textContent = displayName;
         
         card.appendChild(img);
-        card.appendChild(label);
+        card.appendChild(labelDiv);
         
         // Click to enlarge or retry on error
         card.addEventListener('click', function() {
