@@ -55,14 +55,23 @@ function startEvaluation() {
     const allPrompts = generateAllPrompts();
     state.selectedPrompts = shuffleArray(allPrompts).slice(0, SCENE_CONFIG.promptsPerSession);
     
-    // Initialize results array
-    state.results = state.selectedPrompts.map(prompt => ({
-        sceneType: prompt.sceneType,
-        promptId: prompt.promptId,
-        physicsRanking: null,
-        visualRanking: null,
-        methodOrder: null  // Record the method order shown to user
-    }));
+    // Initialize results array with random label-to-method mapping for each scene
+    state.results = state.selectedPrompts.map(prompt => {
+        // For each scene, randomly assign methods to labels A-E
+        const shuffledMethods = shuffleArray([...SCENE_CONFIG.methodKeys]);
+        const labelToMethod = {};  // e.g., {'A': 'holodeck', 'B': 'ours', ...}
+        SCENE_CONFIG.methodLabels.forEach((label, index) => {
+            labelToMethod[label] = shuffledMethods[index];
+        });
+        
+        return {
+            sceneType: prompt.sceneType,
+            promptId: prompt.promptId,
+            physicsRanking: null,  // Will store actual method names
+            visualRanking: null,   // Will store actual method names
+            labelToMethod: labelToMethod  // Random mapping for this scene
+        };
+    });
     
     // Switch to evaluation page
     showPage('evaluation-page');
@@ -111,13 +120,8 @@ function loadCurrentPrompt() {
     const promptText = SCENE_CONFIG.promptTexts[promptKey] || 'Prompt not available';
     document.getElementById('prompt-text').textContent = promptText;
     
-    // Generate random method order (if not already)
-    if (!result.methodOrder) {
-        result.methodOrder = shuffleArray(Object.keys(SCENE_CONFIG.methods));
-    }
-    
-    // Load images
-    loadImages(current, result.methodOrder);
+    // Load images (always in fixed order A, B, C, D, E)
+    loadImages(current, result);
     
     // Load ranking lists
     loadRankingLists(result);
@@ -126,18 +130,22 @@ function loadCurrentPrompt() {
     updateNavigationButtons();
 }
 
-// Load images
-function loadImages(prompt, methodOrder) {
+// Load images - always display in fixed order A, B, C, D, E
+function loadImages(prompt, result) {
     const grid = document.getElementById('images-grid');
     grid.innerHTML = '';
     
-    methodOrder.forEach((method, index) => {
+    // Display in fixed label order (A, B, C, D, E)
+    SCENE_CONFIG.methodLabels.forEach((label) => {
+        const method = result.labelToMethod[label];  // Get actual method for this label
+        
         const card = document.createElement('div');
         card.className = 'image-card';
         card.dataset.method = method;
+        card.dataset.label = label;
         
         const imgPath = getImagePath(prompt.sceneType, prompt.promptId, method);
-        const displayName = SCENE_CONFIG.methods[method];
+        const displayName = label;  // Always show label (Method A, B, C, D, E)
         
         // Create image element with better error handling
         const img = document.createElement('img');
@@ -200,28 +208,46 @@ function loadImages(prompt, methodOrder) {
 
 // Load ranking lists
 function loadRankingLists(result) {
-    const methods = result.methodOrder;
+    // Get labels in fixed order, convert existing rankings (method names) to labels
+    const labels = [...SCENE_CONFIG.methodLabels];  // Always A, B, C, D, E
     
-    // Physics plausibility ranking
-    const physicsRanking = result.physicsRanking || [...methods];
-    loadSortableList('physics-ranking', physicsRanking);
+    // Create reverse mapping: method -> label
+    const methodToLabel = {};
+    for (const [label, method] of Object.entries(result.labelToMethod)) {
+        methodToLabel[method] = label;
+    }
     
-    // Visual quality ranking
-    const visualRanking = result.visualRanking || [...methods];
-    loadSortableList('visual-ranking', visualRanking);
+    // Physics plausibility ranking - convert method names to labels if exists
+    let physicsLabels;
+    if (result.physicsRanking) {
+        physicsLabels = result.physicsRanking.map(method => methodToLabel[method]);
+    } else {
+        physicsLabels = [...labels];
+    }
+    loadSortableList('physics-ranking', physicsLabels, result);
+    
+    // Visual quality ranking - convert method names to labels if exists
+    let visualLabels;
+    if (result.visualRanking) {
+        visualLabels = result.visualRanking.map(method => methodToLabel[method]);
+    } else {
+        visualLabels = [...labels];
+    }
+    loadSortableList('visual-ranking', visualLabels, result);
 }
 
-// Load sortable list
-function loadSortableList(listId, methods) {
+// Load sortable list - now takes labels (Method A, B, C, D, E) instead of method names
+function loadSortableList(listId, labels, result) {
     const list = document.getElementById(listId);
     list.innerHTML = '';
     
-    methods.forEach((method, index) => {
+    labels.forEach((label, index) => {
         const li = document.createElement('li');
-        li.dataset.method = method;
+        li.dataset.label = label;  // Store label
+        li.dataset.method = result.labelToMethod[label];  // Store actual method
         li.innerHTML = `
             <span class="rank-number">${index + 1}</span>
-            <span class="method-name">${SCENE_CONFIG.methods[method]}</span>
+            <span class="method-name">${label}</span>
             <span class="drag-handle">⋮⋮</span>
         `;
         list.appendChild(li);
@@ -371,7 +397,7 @@ function copyToClipboard() {
     }
 }
 
-// Show summary
+// Show summary - display using labels (Method A, B, etc.) for user
 function showSummary() {
     const summaryContent = document.getElementById('summary-content');
     
@@ -379,8 +405,14 @@ function showSummary() {
     html += '<tr style="background:#f0f0f0;"><th style="padding:10px; text-align:left;">Scene</th><th style="padding:10px; text-align:left;">Physics Ranking</th><th style="padding:10px; text-align:left;">Visual Ranking</th></tr>';
     
     state.results.forEach(result => {
-        const physicsStr = result.physicsRanking.map(m => SCENE_CONFIG.methods[m]).join(' > ');
-        const visualStr = result.visualRanking.map(m => SCENE_CONFIG.methods[m]).join(' > ');
+        // Create reverse mapping for this scene: method -> label
+        const methodToLabel = {};
+        for (const [label, method] of Object.entries(result.labelToMethod)) {
+            methodToLabel[method] = label;
+        }
+        
+        const physicsStr = result.physicsRanking.map(m => methodToLabel[m]).join(' > ');
+        const visualStr = result.visualRanking.map(m => methodToLabel[m]).join(' > ');
         
         html += `<tr style="border-bottom:1px solid #eee;">
             <td style="padding:10px;">${SCENE_CONFIG.sceneTypes[result.sceneType]}<br><small>${result.promptId}</small></td>
@@ -391,49 +423,10 @@ function showSummary() {
     
     html += '</table>';
     
-    // Calculate average rankings for each method
-    html += '<h4 style="margin-top:20px;">Average Ranking Statistics</h4>';
-    html += calculateAverageRankings();
+    // Note: Don't show average rankings to user since labels are random per scene
+    html += '<p style="margin-top:20px; color:#666; font-style:italic;">Thank you for your evaluation! Your rankings have been recorded.</p>';
     
     summaryContent.innerHTML = html;
-}
-
-// Calculate average rankings
-function calculateAverageRankings() {
-    const methods = Object.keys(SCENE_CONFIG.methods);
-    const physicsScores = {};
-    const visualScores = {};
-    
-    methods.forEach(m => {
-        physicsScores[m] = [];
-        visualScores[m] = [];
-    });
-    
-    state.results.forEach(result => {
-        result.physicsRanking.forEach((method, index) => {
-            physicsScores[method].push(index + 1);
-        });
-        result.visualRanking.forEach((method, index) => {
-            visualScores[method].push(index + 1);
-        });
-    });
-    
-    let html = '<table style="width:100%; border-collapse:collapse; margin-top:10px;">';
-    html += '<tr style="background:#667eea; color:white;"><th style="padding:10px;">Method</th><th style="padding:10px;">Physics (Avg)</th><th style="padding:10px;">Visual (Avg)</th></tr>';
-    
-    methods.forEach(method => {
-        const physicsAvg = (physicsScores[method].reduce((a, b) => a + b, 0) / physicsScores[method].length).toFixed(2);
-        const visualAvg = (visualScores[method].reduce((a, b) => a + b, 0) / visualScores[method].length).toFixed(2);
-        
-        html += `<tr style="border-bottom:1px solid #eee;">
-            <td style="padding:10px; font-weight:bold;">${SCENE_CONFIG.methods[method]}</td>
-            <td style="padding:10px; text-align:center;">${physicsAvg}</td>
-            <td style="padding:10px; text-align:center;">${visualAvg}</td>
-        </tr>`;
-    });
-    
-    html += '</table>';
-    return html;
 }
 
 // Open modal

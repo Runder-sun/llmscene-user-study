@@ -32,14 +32,11 @@ const SCENE_CONFIG = {
         'studyroom': ['prompt12', 'prompt24']
     },
     
-    // Method list and display names
-    methods: {
-        'holodeck': 'Method A',
-        'idesign': 'Method B',
-        'layoutgpt': 'Method C',
-        'layoutvlm': 'Method D',
-        'ours': 'Method E'
-    },
+    // Method list (internal names)
+    methodKeys: ['holodeck', 'idesign', 'layoutgpt', 'layoutvlm', 'ours'],
+    
+    // Display labels (will be randomly assigned to methods)
+    methodLabels: ['Method A', 'Method B', 'Method C', 'Method D', 'Method E'],
     
     // Special filename mapping (for inconsistent naming)
     specialFileNames: {
