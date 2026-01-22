@@ -8,16 +8,16 @@ const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby_gWC8L6kINE
 
 // Scene Configuration
 const SCENE_CONFIG = {
-    // Scene types and their display names
+    // Scene types and their display names (English / Chinese)
     sceneTypes: {
-        'bedroom': 'Bedroom',
-        'board_game_room': 'Board Game Room',
-        'diningroom': 'Dining Room',
-        'gym': 'Gym',
-        'livingroom': 'Living Room',
-        'office': 'Office',
-        'poolroom': 'Pool Room',
-        'studyroom': 'Study Room'
+        'bedroom': 'Bedroom / 卧室',
+        'board_game_room': 'Board Game Room / 棋牌室',
+        'diningroom': 'Dining Room / 餐厅',
+        'gym': 'Gym / 健身房',
+        'livingroom': 'Living Room / 客厅',
+        'office': 'Office / 办公室',
+        'poolroom': 'Pool Room / 台球室',
+        'studyroom': 'Study Room / 书房'
     },
     
     // Prompt list for each scene type
