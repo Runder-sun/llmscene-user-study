@@ -26,6 +26,38 @@ function shuffleArray(array) {
     return shuffled;
 }
 
+// Generate all possible prompts
+function generateAllPrompts() {
+    const prompts = [];
+    for (const [sceneType, promptIds] of Object.entries(SCENE_CONFIG.prompts)) {
+        for (const promptId of promptIds) {
+            prompts.push({
+                sceneType: sceneType,
+                promptId: promptId,
+                displayName: SCENE_CONFIG.sceneTypes[sceneType]
+            });
+        }
+    }
+    return prompts;
+}
+
+// Get image path for a method
+function getImagePath(sceneType, promptId, method) {
+    const key = `${sceneType}/${promptId}`;
+    
+    // Check for special filename mapping
+    if (SCENE_CONFIG.specialFileNames && SCENE_CONFIG.specialFileNames[key]) {
+        const specialName = SCENE_CONFIG.specialFileNames[key][method];
+        if (specialName) {
+            return `${SCENE_CONFIG.imageBasePath}${sceneType}/${promptId}/${specialName}`;
+        }
+    }
+    
+    // Use default filename
+    const defaultName = SCENE_CONFIG.defaultFileNames[method];
+    return `${SCENE_CONFIG.imageBasePath}${sceneType}/${promptId}/${defaultName}`;
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
     // Bind start button
