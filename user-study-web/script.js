@@ -103,9 +103,13 @@ function loadCurrentPrompt() {
     document.getElementById('progress-text').textContent = 
         `${state.currentIndex + 1} / ${state.selectedPrompts.length}`;
     
-    // Update scene info
+    // Update scene type (more prominent)
     document.getElementById('scene-type').textContent = current.displayName;
-    document.getElementById('prompt-id').textContent = current.promptId;
+    
+    // Update prompt text (full prompt instead of ID)
+    const promptKey = `${current.sceneType}/${current.promptId}`;
+    const promptText = SCENE_CONFIG.promptTexts[promptKey] || 'Prompt not available';
+    document.getElementById('prompt-text').textContent = promptText;
     
     // Generate random method order (if not already)
     if (!result.methodOrder) {

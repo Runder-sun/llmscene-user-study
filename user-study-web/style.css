@@ -197,16 +197,48 @@ h1 {
     margin-bottom: 25px;
 }
 
-.prompt-info h2 {
+/* Scene type badge - more prominent */
+.scene-type-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 1.4em;
+    font-weight: 700;
+    padding: 12px 30px;
+    border-radius: 50px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* Prompt text box */
+.prompt-text-box {
+    background: #f8f9fa;
+    border-left: 4px solid #667eea;
+    border-radius: 0 8px 8px 0;
+    padding: 15px 20px;
+    text-align: left;
+    max-width: 100%;
+}
+
+.prompt-label {
+    font-weight: 700;
     color: #667eea;
-    margin-bottom: 5px;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.prompt-info p {
-    color: #888;
+.prompt-text-box p {
+    color: #333;
+    font-size: 1em;
+    line-height: 1.6;
+    margin-top: 8px;
+    font-style: italic;
 }
 
-/* 图片网格 */
+/* Image grid */
 .images-container h3 {
     text-align: center;
     color: #333;
