@@ -139,14 +139,59 @@ function loadImages(prompt, methodOrder) {
         const imgPath = getImagePath(prompt.sceneType, prompt.promptId, method);
         const displayName = SCENE_CONFIG.methods[method];
         
-        card.innerHTML = `
-            <img src="${imgPath}" alt="${displayName}" onerror="this.src='placeholder.png'">
-            <div class="method-label">${displayName}</div>
-        `;
+        // Create image element with better error handling
+        const img = document.createElement('img');
+        img.alt = displayName;
+        img.loading = 'lazy';
         
-        // Click to enlarge
+        // Add loading state
+        card.classList.add('loading');
+        
+        img.onload = function() {
+            card.classList.remove('loading');
+            card.classList.add('loaded');
+        };
+        
+        img.onerror = function() {
+            card.classList.remove('loading');
+            card.classList.add('error');
+            // Try to reload once after a short delay
+            if (!this.dataset.retried) {
+                this.dataset.retried = 'true';
+                setTimeout(() => {
+                    this.src = imgPath + '?t=' + Date.now();
+                }, 1000);
+            } else {
+                this.src = 'data:image/svg+xml,' + encodeURIComponent(`
+                    <svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+                        <rect fill="#f0f0f0" width="400" height="300"/>
+                        <text x="200" y="140" text-anchor="middle" fill="#999" font-size="16">Image Loading Failed</text>
+                        <text x="200" y="170" text-anchor="middle" fill="#aaa" font-size="12">Click to retry</text>
+                    </svg>
+                `);
+            }
+        };
+        
+        img.src = imgPath;
+        
+        const label = document.createElement('div');
+        label.className = 'method-label';
+        label.textContent = displayName;
+        
+        card.appendChild(img);
+        card.appendChild(label);
+        
+        // Click to enlarge or retry on error
         card.addEventListener('click', function() {
-            openModal(imgPath, displayName);
+            if (card.classList.contains('error')) {
+                // Retry loading
+                card.classList.remove('error');
+                card.classList.add('loading');
+                img.dataset.retried = '';
+                img.src = imgPath + '?t=' + Date.now();
+            } else {
+                openModal(imgPath, displayName);
+            }
         });
         
         grid.appendChild(card);

@@ -4,7 +4,7 @@
 
 // Google Apps Script Web App URL
 // After deploying Google Apps Script, paste the generated URL here
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzXgIFIfPM-ZEezSryVinmqhwBsnvR8LDksX_Q5IV-gSP58OOCvEiwPvmukQUGT_xSn/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby_gWC8L6kINETg-S2eP3Yl7wHA8WTyRVevtRuMCP5b0nVi-JbCXf_Bv-ZXtL6KJXRM/exec';
 
 // Scene Configuration
 const SCENE_CONFIG = {

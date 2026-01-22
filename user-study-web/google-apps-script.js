@@ -4,7 +4,7 @@
 // ========================================
 
 // 配置：Google Sheets ID（创建表格后填入）
-const SPREADSHEET_ID = 'YOUR_SPREADSHEET_ID_HERE';
+const SPREADSHEET_ID = '12OPgQXM1NIQhqCceQwrn1J6ZIOeTgBSDEcyCb1JtfoY';
 
 // 处理POST请求
 function doPost(e) {
