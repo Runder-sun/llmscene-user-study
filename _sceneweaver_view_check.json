@@ -1,0 +1,178 @@
+[
+  {
+    "room": "diningroom",
+    "prompt": 23,
+    "has_top": false,
+    "has_diag": false,
+    "has_both": false,
+    "candidate_count": 1,
+    "candidates": [
+      "/mnt/data/zhaoyang/Documents/SceneWeaver/output/prompt_baseline_batch/diningroom/023"
+    ],
+    "found_paths": []
+  },
+  {
+    "room": "diningroom",
+    "prompt": 40,
+    "has_top": false,
+    "has_diag": false,
+    "has_both": false,
+    "candidate_count": 1,
+    "candidates": [
+      "/mnt/data/zhaoyang/Documents/SceneWeaver/output/prompt_baseline_batch/diningroom/040"
+    ],
+    "found_paths": []
+  },
+  {
+    "room": "studyroom",
+    "prompt": 12,
+    "has_top": false,
+    "has_diag": false,
+    "has_both": false,
+    "candidate_count": 1,
+    "candidates": [
+      "/mnt/data/zhaoyang/Documents/SceneWeaver/output/prompt_baseline_batch/studyroom/012"
+    ],
+    "found_paths": []
+  },
+  {
+    "room": "studyroom",
+    "prompt": 24,
+    "has_top": false,
+    "has_diag": false,
+    "has_both": false,
+    "candidate_count": 1,
+    "candidates": [
+      "/mnt/data/zhaoyang/Documents/SceneWeaver/output/prompt_baseline_batch/studyroom/024"
+    ],
+    "found_paths": []
+  },
+  {
+    "room": "office",
+    "prompt": 34,
+    "has_top": false,
+    "has_diag": false,
+    "has_both": false,
+    "candidate_count": 0,
+    "candidates": [],
+    "found_paths": []
+  },
+  {
+    "room": "office",
+    "prompt": 36,
+    "has_top": false,
+    "has_diag": false,
+    "has_both": false,
+    "candidate_count": 0,
+    "candidates": [],
+    "found_paths": []
+  },
+  {
+    "room": "bedroom",
+    "prompt": 33,
+    "has_top": false,
+    "has_diag": false,
+    "has_both": false,
+    "candidate_count": 1,
+    "candidates": [
+      "/mnt/data/zhaoyang/Documents/SceneWeaver/output/prompt_baseline_batch/bedroom/033"
+    ],
+    "found_paths": []
+  },
+  {
+    "room": "bedroom",
+    "prompt": 36,
+    "has_top": false,
+    "has_diag": false,
+    "has_both": false,
+    "candidate_count": 1,
+    "candidates": [
+      "/mnt/data/zhaoyang/Documents/SceneWeaver/output/prompt_baseline_batch/bedroom/036"
+    ],
+    "found_paths": []
+  },
+  {
+    "room": "board_game_room",
+    "prompt": 29,
+    "has_top": false,
+    "has_diag": false,
+    "has_both": false,
+    "candidate_count": 0,
+    "candidates": [],
+    "found_paths": []
+  },
+  {
+    "room": "board_game_room",
+    "prompt": 30,
+    "has_top": false,
+    "has_diag": false,
+    "has_both": false,
+    "candidate_count": 0,
+    "candidates": [],
+    "found_paths": []
+  },
+  {
+    "room": "gym",
+    "prompt": 15,
+    "has_top": false,
+    "has_diag": false,
+    "has_both": false,
+    "candidate_count": 1,
+    "candidates": [
+      "/mnt/data/zhaoyang/Documents/SceneWeaver/output/custom_prompt_batch/gym/015"
+    ],
+    "found_paths": []
+  },
+  {
+    "room": "gym",
+    "prompt": 2,
+    "has_top": false,
+    "has_diag": false,
+    "has_both": false,
+    "candidate_count": 1,
+    "candidates": [
+      "/mnt/data/zhaoyang/Documents/SceneWeaver/output/custom_prompt_batch/gym/002"
+    ],
+    "found_paths": []
+  },
+  {
+    "room": "poolroom",
+    "prompt": 18,
+    "has_top": false,
+    "has_diag": false,
+    "has_both": false,
+    "candidate_count": 0,
+    "candidates": [],
+    "found_paths": []
+  },
+  {
+    "room": "poolroom",
+    "prompt": 23,
+    "has_top": false,
+    "has_diag": false,
+    "has_both": false,
+    "candidate_count": 0,
+    "candidates": [],
+    "found_paths": []
+  },
+  {
+    "room": "livingroom",
+    "prompt": 33,
+    "has_top": false,
+    "has_diag": false,
+    "has_both": false,
+    "candidate_count": 0,
+    "candidates": [],
+    "found_paths": []
+  },
+  {
+    "room": "livingroom",
+    "prompt": 59,
+    "has_top": false,
+    "has_diag": false,
+    "has_both": false,
+    "candidate_count": 0,
+    "candidates": [],
+    "found_paths": []
+  }
+]

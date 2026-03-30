@@ -1,0 +1,62 @@
+[
+  {
+    "room": "board_game_room",
+    "prompt": "prompt29",
+    "status": "failed",
+    "returncode": -15,
+    "seconds": 446.5,
+    "run_dir": "/mnt/data/zhaoyang/Documents/SceneWeaver/output/custom_prompt_batch/board_game_room/029/sceneweaver/This_Scandinavian-style_Board__0",
+    "blend": null,
+    "log_tail": "\\nChosen tool for this step:\\n- None. Stop making modifications.\\n\\nExpectation:\\n- Further retries are not expected to help in the current state.\\n- Additional attempts would likely repeat the same failure.\\n\\nSuggested next steps:\\n- Resolve tool reliability first.\\n- After recovery, restart with a minimal initialization pass focused only on structural layout and circulation.\\n2026-03-30 20:40:21.972 | INFO     | app.agent.scenedesigner:think:371 - 🛠️ SceneDesigner selected 0 tools to use\\n2026-03-30 20:40:21.972 | WARNING  | app.agent.scenedesigner:step:192 - No tool calls returned at step 0 after retries; forcing init_gpt fallback.\\n2026-03-30 20:40:21.972 | ERROR    | app.agent.scenedesigner:step:212 - Forced init_gpt fallback failed: execute() missing 1 required positional argument: 'roomtype'\\n2026-03-30 20:40:21.981 | INFO     | app.agent.scenedesigner:run:599 - Executing step 1/unlimited for /mnt/data/zhaoyang/Documents/SceneWeaver/output/custom_prompt_batch/board_game_room/029/sceneweaver/This_Scandinavian-style_Board__0\\nError: Failed in evaluation in iter 0 !!! Go back to the last iter.\\ncp: cannot stat '/mnt/data/zhaoyang/Documents/SceneWeaver/output/custom_prompt_batch/board_game_room/029/sceneweaver/This_Scandinavian-style_Board__0/record_scene/render_0_marked.jpg': No such file or directory\\ncp: cannot stat '/mnt/data/zhaoyang/Documents/SceneWeaver/output/custom_prompt_batch/board_game_room/029/sceneweaver/This_Scandinavian-style_Board__0/record_scene/render_0.jpg': No such file or directory\\ncp: cannot stat '/mnt/data/zhaoyang/Documents/SceneWeaver/output/custom_prompt_batch/board_game_room/029/sceneweaver/This_Scandinavian-style_Board__0/record_files/metric_0.json': No such file or directory\\ncp: cannot stat '/mnt/data/zhaoyang/Documents/SceneWeaver/output/custom_prompt_batch/board_game_room/029/sceneweaver/This_Scandinavian-style_Board__0/record_files/scene_0.blend': No such file or directory\\ncp: cannot stat '/mnt/data/zhaoyang/Documents/SceneWeaver/output/custom_prompt_batch/board_game_room/029/sceneweaver/This_Scandinavian-style_Board__0/record_files/env_0.pkl': No such file or directory\\ncp: cannot stat '/mnt/data/zhaoyang/Documents/SceneWeaver/output/custom_prompt_batch/board_game_room/029/sceneweaver/This_Scandinavian-style_Board__0/record_files/house_bbox_0.pkl': No such file or directory\\ncp: cannot stat '/mnt/data/zhaoyang/Documents/SceneWeaver/output/custom_prompt_batch/board_game_room/029/sceneweaver/This_Scandinavian-style_Board__0/record_files/p_0.pkl': No such file or directory\\ncp: cannot stat '/mnt/data/zhaoyang/Documents/SceneWeaver/output/custom_prompt_batch/board_game_room/029/sceneweaver/This_Scandinavian-style_Board__0/record_files/solved_bbox_0.pkl': No such file or directory\\ncp: cannot stat '/mnt/data/zhaoyang/Documents/SceneWeaver/output/custom_prompt_batch/board_game_room/029/sceneweaver/This_Scandinavian-style_Board__0/record_files/solver_0.pkl': No such file or directory\\ncp: cannot stat '/mnt/data/zhaoyang/Documents/SceneWeaver/output/custom_prompt_batch/board_game_room/029/sceneweaver/This_Scandinavian-style_Board__0/record_files/state_0.pkl': No such file or directory\\ncp: cannot stat '/mnt/data/zhaoyang/Documents/SceneWeaver/output/custom_prompt_batch/board_game_room/029/sceneweaver/This_Scandinavian-style_Board__0/record_files/terrain_0.pkl': No such file or directory\\ncp: cannot stat '/mnt/data/zhaoyang/Documents/SceneWeaver/output/custom_prompt_batch/board_game_room/029/sceneweaver/This_Scandinavian-style_Board__0/pipeline/metric_0.json': No such file or directory\\n2026-03-30 20:40:22.011 | INFO     | app.agent.scenedesigner:run:599 - Executing step 0/unlimited for /mnt/data/zhaoyang/Documents/SceneWeaver/output/custom_prompt_batch/board_game_room/029/sceneweaver/This_Scandinavian-style_Board__0\\n2026-03-30 20:40:30.965 | INFO     | app.llm:update_token_count:269 - Token usage: Input=29432, Completion=316, Cumulative Input=1329956, Cumulative Completion=15634, Total=29748, Cumulative Total=1345590"
+  },
+  {
+    "room": "board_game_room",
+    "prompt": "prompt30",
+    "status": "failed",
+    "returncode": 0,
+    "seconds": 1803.8,
+    "run_dir": "/mnt/data/zhaoyang/Documents/SceneWeaver/output/custom_prompt_batch/board_game_room/030/sceneweaver/This_luxurious_minimalist_Boar_0",
+    "blend": null,
+    "log_tail": "- No.\\n- The core problem is still the missing foundational layout.\\n- Since there is no scene, none of the required object relations can be checked.\\n\\n3. Lowest GPT score and physical problem\\n- No explicit GPT score report is available.\\n- The weakest practical category remains initialization / structural completeness.\\n- Physical problem: no room geometry or object placements exist.\\n\\n4. Most serious problem to solve\\n- The most serious problem is confirmed failure of all available initialization paths.\\n- Since both tools have already failed and repeating them would be ineffective, no further tool action is justified.\\n\\nAppropriate tools for next step with confidence\\n- `functions.init_gpt` — 0.00\\n- `functions.init_physcene` — 0.00\\n\\nChosen tool for this step\\n- No tool should be executed.\\n\\nExpectation\\n- Stop making modifications.\\n\\nSuggested next steps\\n- Stay in manual planning mode until tool reliability changes.\\n2026-03-30 21:10:37.176 | INFO     | app.agent.scenedesigner:think:373 - 🛠️ SceneDesigner selected 0 tools to use\\n2026-03-30 21:10:37.176 | WARNING  | app.agent.scenedesigner:step:193 - No tool calls returned at step 0 after retries; forcing init_gpt fallback.\\n2026-03-30 21:10:37.176 | ERROR    | app.agent.scenedesigner:step:214 - Forced init_gpt fallback failed: execute() missing 1 required positional argument: 'roomtype'\\n2026-03-30 21:10:37.176 | WARNING  | app.agent.scenedesigner:handle_stuck_state:639 - Agent detected stuck state. Added prompt:         Observed duplicate responses. Consider new strategies and avoid repeating ineffective paths already attempted.\\n2026-03-30 21:10:37.184 | INFO     | __main__:main:39 - Request processing completed."
+  },
+  {
+    "room": "gym",
+    "prompt": "prompt2",
+    "status": "failed",
+    "returncode": 0,
+    "seconds": 1831.8,
+    "run_dir": "/mnt/data/zhaoyang/Documents/SceneWeaver/output/custom_prompt_batch/gym/002/sceneweaver/This_modern_gym_is_arranged_al_0",
+    "blend": null,
+    "log_tail": "- However, this exact issue was just attempted again with the only suitable tool and failed.\\n- So the dominant blocker is now **tool failure**, not scene design logic.\\n\\n## Appropriate tools for next step with confidence\\n- `functions.init_gpt`: **0.00**\\n  - The only theoretically applicable tool for a gym/custom room.\\n  - Confidence must be degraded to zero because the same unresolved initialization task failed again in the last step.\\n- `functions.init_physcene`: **0.00**\\n  - Not applicable because gym is not within its supported room types.\\n\\n## Chosen tool for this step\\n- **None. Stop making modifications.**\\n\\n## Expectation\\n- Another immediate retry is extremely unlikely to improve the result.\\n- Further execution now would likely repeat the same failure and still leave the scene empty.\\n\\n## Suggested next steps\\n1. Pause scene generation.\\n2. Resume only when a stable gym-compatible initialization path is available.\\n3. If resumed later, start from a very constrained base program:\\n   - strength zone on one wall,\\n   - cardio sequence along depth,\\n   - open accessory/stretch zone at the far end,\\n   - maintain clear central circulation,\\n   - add no extra objects until initialization succeeds.\\n2026-03-30 21:41:05.495 | INFO     | app.agent.scenedesigner:think:374 - 🛠️ SceneDesigner selected 0 tools to use\\n2026-03-30 21:41:05.495 | WARNING  | app.agent.scenedesigner:step:193 - No tool calls returned at step 0 after retries; forcing init_gpt fallback.\\nQuerying GPT-4.1 API...\\n2026-03-30 21:41:08.911 | INFO     | __main__:main:39 - Request processing completed."
+  },
+  {
+    "room": "office",
+    "prompt": "prompt34",
+    "status": "failed",
+    "returncode": 0,
+    "seconds": 1821.4,
+    "run_dir": "/mnt/data/zhaoyang/Documents/SceneWeaver/output/custom_prompt_batch/office/034/sceneweaver/This_spacious_minimalist_offic_0",
+    "blend": null,
+    "log_tail": "- The effective lowest-scoring category remains foundational initialization.\\n- Physical problem:\\n  - no room geometry\\n  - no functional zoning\\n  - no circulation structure\\n  - no object placement relationships\\n\\n4. Find the most serious problem to solve\\n- The most serious problem is repeated failure of the office initialization path.\\n- Because the same issue was not solved by the last step, the score of the last-used tool should remain fully degraded.\\n\\nAppropriate tools for next step with confidence score\\n- `functions.init_gpt` — 0.00\\n  - Only theoretically applicable, but repeated failure makes it unsuitable now.\\n- `functions.init_physcene` — 0.00\\n  - Not compatible with office scenes.\\n\\nChosen tool for this step\\n- No tool should be executed.\\n\\nExpectation\\n- Another retry is very likely to fail again and will not improve the scene.\\n\\nSuggested next steps\\n- Stop making modifications.\\n- Continue only if a repaired or alternative office-compatible initialization tool becomes available.\\n2026-03-30 22:11:27.093 | INFO     | app.agent.scenedesigner:think:374 - 🛠️ SceneDesigner selected 0 tools to use\\n2026-03-30 22:11:27.094 | WARNING  | app.agent.scenedesigner:step:193 - No tool calls returned at step 0 after retries; forcing init_gpt fallback.\\nQuerying GPT-4.1 API...\\n2026-03-30 22:11:30.276 | INFO     | __main__:main:39 - Request processing completed."
+  },
+  {
+    "room": "poolroom",
+    "prompt": "prompt18",
+    "status": "failed",
+    "returncode": -15,
+    "seconds": 747.7,
+    "run_dir": "/mnt/data/zhaoyang/Documents/SceneWeaver/output/custom_prompt_batch/poolroom/018/sceneweaver/This_Billiards_Room_centers_on_0",
+    "blend": null,
+    "log_tail": "2. Check whether previous problems have been solved\\n- No.\\n- The main unresolved problem remains missing initialization of the billiards-room layout.\\n- Since there is still no scene, all required object relations remain unmet.\\n\\n3. Lowest GPT score and physical problem\\n- No evaluation result or GPT score breakdown is available.\\n- So no lowest GPT score can be identified.\\n- The physical problem is still complete absence of generated layout and circulation.\\n\\n4. Most serious problem to solve\\n- The most serious problem remains repeated initialization failure.\\n- Because the same tool failed again on the same unresolved task, it should not be retried now.\\n\\nAppropriate tools for next step with confidence\\n- `functions.init_gpt` — 0.00\\n- `functions.init_physcene` — 0.00\\n\\nChosen tool for this step\\n- Stop making modifications.\\n\\nExpectation\\n- Another retry is unlikely to improve the result until the tool issue is fixed.\\n\\nSuggested next steps\\n- Repair the `init_gpt` tool/runtime issue first.\\n- Then retry a minimal geometry-first billiards-room initialization.\\n2026-03-30 22:23:55.322 | INFO     | app.agent.scenedesigner:think:374 - 🛠️ SceneDesigner selected 0 tools to use\\n2026-03-30 22:23:55.323 | WARNING  | app.agent.scenedesigner:step:193 - No tool calls returned at step 0 after retries; forcing init_gpt fallback.\\nQuerying GPT-4.1 API..."
+  },
+  {
+    "room": "poolroom",
+    "prompt": "prompt23",
+    "status": "ok",
+    "returncode": 0,
+    "seconds": 1827.3,
+    "run_dir": "/mnt/data/zhaoyang/Documents/SceneWeaver/output/custom_prompt_batch/poolroom/023/sceneweaver/This_large_Bohemian_Billiards__0",
+    "blend": "/mnt/data/zhaoyang/Documents/SceneWeaver/output/custom_prompt_batch/poolroom/023/sceneweaver/This_large_Bohemian_Billiards__0/record_files/scene_0.blend",
+    "sceneweaver_png": "/mnt/data/zhaoyang/Documents/llmscene-user-study/poolroom/prompt23/sceneweaver.png"
+  }
+]
