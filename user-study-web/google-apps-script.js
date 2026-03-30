@@ -7,7 +7,7 @@
 const SPREADSHEET_ID = '12OPgQXM1NIQhqCceQwrn1J6ZIOeTgBSDEcyCb1JtfoY';
 
 // 方法列表（固定顺序，便于统计）
-const METHODS = ['holodeck', 'idesign', 'layoutgpt', 'layoutvlm', 'ours'];
+const METHODS = ['holodeck', 'idesign', 'layoutgpt', 'layoutvlm', 'ours', 'sceneweaver'];
 
 // 处理POST请求
 function doPost(e) {
@@ -33,12 +33,12 @@ function doGet(e) {
 }
 
 // 将排名数组转换为各方法的排名数字
-// 输入: ['layoutgpt', 'layoutvlm', 'ours', 'idesign', 'holodeck'] (从好到差)
-// 输出: {holodeck: 5, idesign: 4, layoutgpt: 1, layoutvlm: 2, ours: 3}
+// 输入: ['layoutgpt', 'layoutvlm', 'ours', 'idesign', 'holodeck', 'sceneweaver'] (从好到差)
+// 输出: {holodeck: 5, idesign: 4, layoutgpt: 1, layoutvlm: 2, ours: 3, sceneweaver: 6}
 function rankingToScores(rankingArray) {
   const scores = {};
   rankingArray.forEach((method, index) => {
-    scores[method] = index + 1;  // 排名1=最好, 5=最差
+    scores[method] = index + 1;  // 排名1=最好, 数字越大越差
   });
   return scores;
 }
@@ -86,7 +86,8 @@ function saveStatisticsData(ss, data) {
       'idesign_物理', 'idesign_视觉',
       'layoutgpt_物理', 'layoutgpt_视觉',
       'layoutvlm_物理', 'layoutvlm_视觉',
-      'ours_物理', 'ours_视觉'
+      'ours_物理', 'ours_视觉',
+      'sceneweaver_物理', 'sceneweaver_视觉'
     ]);
   }
   
@@ -138,7 +139,7 @@ function calculateStatistics() {
   // 跳过表头，统计数据
   for (let i = 1; i < data.length; i++) {
     const row = data[i];
-    // 列4-13: holodeck_物理, holodeck_视觉, idesign_物理, idesign_视觉, ...
+    // 列4开始: 每个方法两列，依次为 物理排名 和 视觉排名
     METHODS.forEach((method, idx) => {
       const physicsCol = 4 + idx * 2;
       const visualCol = 5 + idx * 2;

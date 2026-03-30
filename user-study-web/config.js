@@ -33,10 +33,10 @@ const SCENE_CONFIG = {
     },
     
     // Method list (internal names)
-    methodKeys: ['holodeck', 'idesign', 'layoutgpt', 'layoutvlm', 'ours'],
+    methodKeys: ['holodeck', 'idesign', 'layoutgpt', 'layoutvlm', 'ours', 'sceneweaver'],
     
     // Display labels (will be randomly assigned to methods)
-    methodLabels: ['Method A', 'Method B', 'Method C', 'Method D', 'Method E'],
+    methodLabels: ['Method A', 'Method B', 'Method C', 'Method D', 'Method E', 'Method F'],
     
     // Special filename mapping (for inconsistent naming)
     specialFileNames: {
@@ -55,7 +55,8 @@ const SCENE_CONFIG = {
         'idesign': 'idesign.png',
         'layoutgpt': 'layoutgpt.png',
         'layoutvlm': 'layoutvlm.png',
-        'ours': 'ours.png'
+        'ours': 'ours.png',
+        'sceneweaver': 'sceneweaver.png'
     },
     
     // Number of scenes per evaluation session

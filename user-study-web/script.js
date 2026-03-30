@@ -89,7 +89,7 @@ function startEvaluation() {
     
     // Initialize results array with random label-to-method mapping for each scene
     state.results = state.selectedPrompts.map(prompt => {
-        // For each scene, randomly assign methods to labels A-E
+        // For each scene, randomly assign methods to labels (A-F)
         const shuffledMethods = shuffleArray([...SCENE_CONFIG.methodKeys]);
         const labelToMethod = {};  // e.g., {'A': 'holodeck', 'B': 'ours', ...}
         SCENE_CONFIG.methodLabels.forEach((label, index) => {
@@ -152,7 +152,7 @@ function loadCurrentPrompt() {
     const promptText = SCENE_CONFIG.promptTexts[promptKey] || 'Prompt not available';
     document.getElementById('prompt-text').textContent = promptText;
     
-    // Load images (always in fixed order A, B, C, D, E)
+    // Load images (always in fixed order A-F)
     loadImages(current, result);
     
     // Load ranking lists
@@ -162,12 +162,12 @@ function loadCurrentPrompt() {
     updateNavigationButtons();
 }
 
-// Load images - always display in fixed order A, B, C, D, E
+// Load images - always display in fixed order A-F
 function loadImages(prompt, result) {
     const grid = document.getElementById('images-grid');
     grid.innerHTML = '';
     
-    // Display in fixed label order (A, B, C, D, E)
+    // Display in fixed label order (A-F)
     SCENE_CONFIG.methodLabels.forEach((methodLabel) => {
         const method = result.labelToMethod[methodLabel];  // Get actual method for this label
         
@@ -177,7 +177,7 @@ function loadImages(prompt, result) {
         card.dataset.label = methodLabel;
         
         const imgPath = getImagePath(prompt.sceneType, prompt.promptId, method);
-        const displayName = methodLabel;  // Always show label (Method A, B, C, D, E)
+        const displayName = methodLabel;  // Always show label (Method A-F)
         
         // Create image element with better error handling
         const img = document.createElement('img');
@@ -241,7 +241,7 @@ function loadImages(prompt, result) {
 // Load ranking lists
 function loadRankingLists(result) {
     // Get labels in fixed order, convert existing rankings (method names) to labels
-    const labels = [...SCENE_CONFIG.methodLabels];  // Always A, B, C, D, E
+    const labels = [...SCENE_CONFIG.methodLabels];  // Always A-F
     
     // Create reverse mapping: method -> label
     const methodToLabel = {};
@@ -268,7 +268,7 @@ function loadRankingLists(result) {
     loadSortableList('visual-ranking', visualLabels, result);
 }
 
-// Load sortable list - now takes labels (Method A, B, C, D, E) instead of method names
+// Load sortable list - now takes labels (Method A-F) instead of method names
 function loadSortableList(listId, labels, result) {
     const list = document.getElementById(listId);
     list.innerHTML = '';
