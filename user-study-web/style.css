@@ -284,7 +284,7 @@ h1 {
 
 .images-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 15px;
     margin-bottom: 30px;
 }
@@ -644,4 +644,30 @@ h1 {
     h1 {
         font-size: 1.5em;
     }
+}
+
+/* Language Toggle Bar */
+.lang-toggle-bar {
+    position: fixed;
+    top: 16px;
+    right: 24px;
+    z-index: 1000;
+}
+
+.lang-btn {
+    background: rgba(255, 255, 255, 0.92);
+    border: 1.5px solid #667eea;
+    color: #667eea;
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+.lang-btn:hover {
+    background: #667eea;
+    color: white;
 }
